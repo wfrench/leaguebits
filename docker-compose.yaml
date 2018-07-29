@@ -1,0 +1,21 @@
+web:
+  build: .
+  ports:
+    - "8000:8000"
+  links:
+    - db:db
+  command: ./entrypoint.sh
+  stdin_open: true
+  tty: true
+  volumes:
+    - .:/code
+
+db:
+  image: mysql:latest
+  command: mysqld --default-authentication-plugin=mysql_native_password
+  environment:
+    - MYSQL_DATABASE=django
+    - MYSQL_ROOT_PASSWORD=mysql
+  ports:
+    - "3306:3306"
+
